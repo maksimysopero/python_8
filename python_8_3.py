@@ -1,19 +1,21 @@
+ #Логическое программирование/ Решение головоломки
+
 from kanren import *
 from kanren.core import lall
 import time
 
-def left(q, p, list):
+def left(q, p, list): # определеям 2 функции 
     return membero((p, q),  zip(list, list[1:]))
 def next(q, p, list):
     return conde([left(q, p, list)], [left(p, q, list)])
 
 houses = var()
 
-rules_zebraproblem = lall(
+rules_zebraproblem = lall(  
     (eq, (var(), var(), var(), var(), var()), houses),
     (membero,('Englishman', var(), var(), var(), 'red'), houses),
     (membero,('Swede', var(), var(), 'dog', var()), houses),
-    (membero,('Dane', var(), 'tea', var(), var()), houses),
+    (membero,('Dane', var(), 'tea', var(), var()), houses),                              #определяем правила с помощью lall
     (left,(var(), var(), var(), var(), 'green'), (var(), var(), var(), var(), 'white'), houses),
     (membero,(var(), var(), 'coffee', var(), 'green'), houses),
     (membero,(var(), 'Pall Mall', var(), 'birds', var()), houses),
@@ -27,9 +29,9 @@ rules_zebraproblem = lall(
     (next,('Norwegian', var(), var(), var(), var()), (var(), var(), var(), var(), 'blue'), houses),
     (next,(var(), 'Blend', var(), var(), var()), (var(), var(), 'water', var(), var()), houses),
     (membero,(var(), var(), var(), 'zebra', var()), houses)
- ) #идеально xD
+ ) 
 
-solutions = run(0, houses, rules_zebraproblem)
+solutions = run(0, houses, rules_zebraproblem) #запускаем решатель с ограничениями
 
 output_zebra = [house for house in solutions[0] if 'zebra' in house][0][0]
 
